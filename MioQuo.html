@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clipboard Tool</title>
+    <style>
+        body { text-align: center; font-family: sans-serif; }
+        textarea { width: 90%; height: 80px; margin: 5px; }
+        button { margin: 5px; padding: 5px 10px; }
+    </style>
+</head>
+<body>
+
+    <button onclick="pasteAndProcess()">取得して加工</button>
+    <textarea id="textArea"></textarea>
+    <button onclick="copyToClipboard()">コピー</button>
+
+    <script>
+        function pasteAndProcess() {
+            navigator.clipboard.readText().then(text => {
+                textArea.value = text.replace(/"/g, '').replace(/\r\n|\r/g, '\n');
+            }).catch(console.error);
+        }
+
+        function copyToClipboard() {
+            textArea.select();
+            navigator.clipboard.writeText(textArea.value).catch(console.error);
+        }
+    </script>
+
+</body>
+</html>
